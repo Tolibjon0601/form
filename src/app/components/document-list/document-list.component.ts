@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { DocumentModel } from '../../models/document.model';
 import { RouterModule } from '@angular/router';
-import { DocumentService } from './../../services/service';
 import { MatDialog } from '@angular/material/dialog';
 import { PrintModalComponent } from '../print-modal/print-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-document-list',
   standalone: true,
-  imports: [
-  CommonModule,
-    RouterModule
-  ],
+  imports: [CommonModule, RouterModule],
   templateUrl: './document-list.component.html',
-  styleUrls: ['./document-list.component.scss']
+  styleUrls: ['./document-list.component.scss'],
 })
 export class DocumentListComponent implements OnInit {
+  documents: DocumentModel[] = [];
 
-  documents$!: Observable<DocumentModel[]>;
-
-  constructor(private documentService: DocumentService,  private dialog: MatDialog
-    ) {}
+  constructor(
+    private dialog: MatDialog,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.documents$ = this.documentService.getDocuments();
+    const data = localStorage.getItem('documents');
+    if (data) {
+      this.documents = JSON.parse(data);
+    }
   }
 
   viewFile(fileUrl?: string): void {
@@ -35,13 +35,16 @@ export class DocumentListComponent implements OnInit {
   }
 
   onRowDoubleClick(document: DocumentModel): void {
-    console.log('Hujjat ochildi (tahrir uchun):', document);
+    this.router.navigate(['/edit', document.registrationNumber]);
   }
 
   printDocument(document: DocumentModel): void {
     this.dialog.open(PrintModalComponent, {
       width: '600px',
-      data: document
+      data: document,
     });
+  }
+  print(): void {
+    window.print();
   }
 }

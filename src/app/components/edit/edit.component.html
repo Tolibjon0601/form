@@ -1,0 +1,58 @@
+<div class="max-w-4xl relative mx-auto p-6 min-h-screen  rounded-xl shadow-md space-y-0">
+  <form
+    [formGroup]="editForm"
+    (ngSubmit)="onSubmit()"
+    class="grid grid-cols-1  gap-0"
+  >
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Регистрационный номер</mat-label>
+      <input matInput formControlName="registrationNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Дата регистрации</mat-label>
+      <input matInput type="date" formControlName="registrationDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Исходящий номер</mat-label>
+      <input matInput formControlName="outgoingNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Дата исходящего документа</mat-label>
+      <input matInput type="date" formControlName="outgoingDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Корреспондент</mat-label>
+      <input matInput formControlName="correspondent" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Тема</mat-label>
+      <input matInput formControlName="subject" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Описание</mat-label>
+      <textarea matInput formControlName="description" rows="4"></textarea>
+    </mat-form-field>
+
+    <div class="flex justify-end absolute right-4  bottom-0 lg:bottom-5 space-x-4">
+      <button
+        type="submit"
+        class="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
+      >
+        Saqlash
+      </button>
+      <button
+        type="button"
+        (click)="router.navigate(['/list'])"
+        class="px-6 py-2 bg-gray-400 text-white rounded-full hover:bg-gray-500"
+      >
+        Orqaga
+      </button>
+    </div>
+  </form>
+</div>

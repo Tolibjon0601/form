@@ -103,7 +103,10 @@ export class DocumentFormComponent {
     const formValues = this.documentForm.value as DocumentModel;
     formValues.fileName = this.selectedFile ? this.selectedFile.name : undefined;
     formValues.fileUrl = this.selectedFile ? URL.createObjectURL(this.selectedFile) : undefined;
-
+// save to localstorage
+let saveData=JSON.parse(localStorage.getItem('documents') || '[]');
+saveData.push(formValues);
+localStorage.setItem('documents', JSON.stringify(saveData));
     this.documentService.addDocument(formValues);
     this.isSaved = true;
     this.snackBar.open('✅ Hujjat muvaffaqiyatli saqlandi!', 'Yopish', {
