@@ -1,8 +1,8 @@
-<div class="max-w-4xl relative mx-auto p-6 min-h-screen  rounded-xl shadow-md space-y-0">
+<div class="max-w-4xl relative mx-auto bg-cyan-50 p-6 min-h-screen  rounded-xl shadow-md space-y-0">
   <form
     [formGroup]="editForm"
     (ngSubmit)="onSubmit()"
-    class="grid grid-cols-1  gap-0"
+    class="grid grid-cols-1  gap-2"
   >
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Регистрационный номер</mat-label>
@@ -38,7 +38,28 @@
       <mat-label>Описание</mat-label>
       <textarea matInput formControlName="description" rows="4"></textarea>
     </mat-form-field>
+    <div class="flex flex-col md:col-span-2">
+      <label class="text-base font-semibold mb-2 text-gray-700">Доступ</label>
+      <mat-radio-group formControlName="access" class="flex text-gray-700 flex-row gap-6">
+        <mat-radio-button [value]="true" class="text-sm ">Да</mat-radio-button>
+        <mat-radio-button [value]="false" class="text-sm">Нет</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
+
+    <div class="flex flex-col md:col-span-2">
+      <label class="font-semibold mb-2 text-gray-700">Контроль</label>
+      <mat-radio-group formControlName="control" class="flex flex-row space-x-6">
+        <mat-radio-button [value]="true">Да</mat-radio-button>
+        <mat-radio-button [value]="false">Нет</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+        <div class="md:col-span-2 flex flex-col space-y-2">
+          <label class="font-semibold">Выбрать Файл:</label>
+          <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" class="border rounded p-2">
+          <div *ngIf="fileError" class="text-red-500">{{ fileError }}</div>
+        </div>
     <div class="flex justify-end absolute right-4  bottom-0 lg:bottom-5 space-x-4">
       <button
         type="submit"
