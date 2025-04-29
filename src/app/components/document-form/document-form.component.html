@@ -1,0 +1,106 @@
+<div class="max-w-4xl mx-auto p-6 bg-gray-50 rounded-xl shadow-md space-y-6">
+  <h2 class="text-2xl font-bold mb-6 text-center"> Реквизиты входящего документа.</h2>
+
+  <form [formGroup]="documentForm" (ngSubmit)="onSubmit()" class="grid  grid-cols-1 md:grid-cols-2 gap-6">
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Рег. № <span class="text-red-500">*</span></mat-label>
+      <input matInput formControlName="registrationNumber">
+
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Дата рег. <span class="text-red-500">*</span></mat-label>
+      <input matInput [matDatepicker]="picker1" formControlName="registrationDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>№ исх. док-та</mat-label>
+      <input matInput formControlName="outgoingNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Дата исх. док-та</mat-label>
+      <input matInput [matDatepicker]="picker2" formControlName="outgoingDate">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Форма доставки</mat-label>
+      <mat-select formControlName="deliveryMethod">
+        <mat-option *ngFor="let method of deliveryMethods" [value]="method">{{ method }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Корреспондент <span class="text-red-500">*</span></mat-label>
+      <mat-select formControlName="correspondent">
+        <mat-option *ngFor="let correspondent of correspondents" [value]="correspondent">{{ correspondent }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full md:col-span-2">
+      <mat-label>Тема <span class="text-red-500">*</span></mat-label>
+      <input matInput formControlName="subject">
+      <!-- <mat-error *ngIf="documentForm.get('subject')?.hasError('required')">
+Mavzu to'ldirilishi kerak
+      </mat-error> -->
+
+      <mat-error *ngIf="documentForm.get('subject')?.hasError('maxlength')">
+        Matn formati va matn hajmi 100 belgidan oshmasligi kerak.      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full md:col-span-2">
+      <mat-label>Описание</mat-label>
+      <textarea matInput formControlName="description" rows="4"></textarea>
+      <mat-error *ngIf="documentForm.get('description')?.hasError('maxlength')">
+        Matn formati va matn hajmi 1000 belgidan oshmasligi kerak.      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Срок исполнения</mat-label>
+      <input matInput [matDatepicker]="picker3" formControlName="executionDate">
+      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+      <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+
+<div class="flex flex-col md:col-span-2">
+  <label class="text-base font-semibold mb-2 text-gray-700">Доступ</label>
+  <mat-radio-group formControlName="access" class="flex text-gray-700 flex-row gap-6">
+    <mat-radio-button [value]="true" class="text-sm ">Да</mat-radio-button>
+    <mat-radio-button [value]="false" class="text-sm">Нет</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+
+<div class="flex flex-col md:col-span-2">
+  <label class="font-semibold mb-2 text-gray-700">Контроль</label>
+  <mat-radio-group formControlName="control" class="flex flex-row space-x-6">
+    <mat-radio-button [value]="true">Да</mat-radio-button>
+    <mat-radio-button [value]="false">Нет</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+    <div class="md:col-span-2 flex flex-col space-y-2">
+      <label class="font-semibold">Выбрать Файл:</label>
+      <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" class="border rounded p-2">
+      <div *ngIf="fileError" class="text-red-500">{{ fileError }}</div>
+    </div>
+
+    <div class="md:col-span-2 flex justify-end space-x-4 mt-4">
+      <button type="button" (click)="closeForm()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Yopish</button>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Saqlash</button>
+    </div>
+
+  </form>
+
+  <div *ngIf="isSaved" class="mt-6 text-right">
+    <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+      Печать
+    </button>
+  </div>
+</div>

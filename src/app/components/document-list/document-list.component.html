@@ -1,0 +1,42 @@
+<div class=" mx-auto  p-6 bg-white rounded-xl shadow-md space-y-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Реквизиты входящего документа.</h2>
+
+  <div class="overflow-x-auto">
+    <div class="min-w-full divide-y divide-gray-200">
+      <div class="bg-gray-100">
+        <div class="flex justify-between">
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Файл</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Рег. №</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Дата рег.</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">№ исх. док-та</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Дата исх. док-та</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Корреспондент</h2>
+          <h2 class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Тема</h2>
+          <h2 class="px-4 py-2 text-left"></h2>
+        </div>
+      </div>
+      <div class="divide-y divide-gray-200" *ngIf="documents$ | async as documents">
+        <div *ngFor="let document of documents" (dblclick)="onRowDoubleClick(document)" class="hover:bg-gray-50 cursor-pointer">
+          <div class="px-4 py-2">
+            <button *ngIf="document.fileUrl" (click)="viewFile(document.fileUrl)" class="text-blue-600 hover:underline">Ko‘rish</button>
+          </div>
+          <p class="px-4 py-2">{{ document.registrationNumber }}</p>
+          <p class="px-4 py-2">{{ document.registrationDate | date:'dd.MM.yyyy' }}</p>
+          <p class="px-4 py-2">{{ document.outgoingNumber || '-' }}</p>
+          <p class="px-4 py-2">{{ document.outgoingDate ? (document.outgoingDate | date:'dd.MM.yyyy') : '-' }}</p>
+          <p class="px-4 py-2">{{ document.correspondent }}</p>
+          <p class="px-4 py-2">{{ document.subject }}</p>
+          <p class="px-4 py-2 text-right">
+            <button (click)="printDocument(document)" class="px-5 py-3 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">Печать</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end mt-6">
+    <a routerLink="/add" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+      Добавить
+    </a>
+  </div>
+</div>

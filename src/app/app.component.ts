@@ -3,10 +3,9 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet], // faqat RouterOutlet kerak
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'] // ko'plik bo'lishi kerak
 })
-export class AppComponent {
-  title = 'For-Fido';
-}
+export class AppComponent {}
